@@ -1,8 +1,10 @@
 const bcrypt = require('bcrypt')
+const moment = require('moment')
+let { v4: uuid } = require('uuid')
 const pool = require('../postgreSQL/pool')
 
 let getUsers = async (req, res) => {
-    pool.query('SELECT * FROM "user"', (err, results) => {
+    pool.query('SELECT * FROM public."Users"', (err, results) => {
         if (err) {
             console.log(err)
             res.status(500).send(err)
@@ -14,10 +16,11 @@ let getUsers = async (req, res) => {
 }
 
 let postUser = async (req, res) => {
-    let { username, name, email, password } = req.body
+    let { name, email, password, profile_picture, gender, age, specialization, refresh_token } = req.body
+    let now = moment()
 
-    pool.query('INSERT INTO "user" (username, name, email, password) VALUES ($1, $2, $3, $4)',
-        [username, name, email, await bcrypt.hash(password, 10)],
+    pool.query('INSERT INTO public."Users" (user_id, name, email, password, profile_picture, gender, age, specialization, date_joined, refresh_token) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
+        [uuid(), name, email, await bcrypt.hash(password, 10), profile_picture, gender, age, specialization, now.format('YYYY-MM-DD HH:mm:ss Z'), refresh_token],
         (err, results) => {
             if (err) {
                 console.log(err)
