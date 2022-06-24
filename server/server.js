@@ -1,7 +1,9 @@
 require('dotenv').config()
+require('./mongoDB/mongodb')
 const cors = require('cors')
 const express = require('express')
 const userRoute = require('./routes/user')
+const prescriptionRoute = require('./routes/prescription')
 
 const app = express()
 
@@ -18,6 +20,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/user', userRoute)
+app.use('/prescription', prescriptionRoute)
 
 app.get('*', (req, res) => {
     res.redirect('/')
