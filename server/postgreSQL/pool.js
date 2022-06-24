@@ -4,11 +4,7 @@ const { Pool } = require('pg')
 module.exports = () => {
     console.log('Connecting to PostgreSQL...')
     return new Pool({
-        user: process.env.PGUSER,
-        host: process.env.HOST,
-        database: process.env.DATABASE,
-        password: process.env.PASSWORD,
-        port: process.env.PG_PORT,
+        connectionString: process.env.DATABASE_URL,
         max: 20,
         connectionTimeoutMillis: 0,
         idleTimeoutMillis: 0,
