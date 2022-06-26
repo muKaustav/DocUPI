@@ -11,4 +11,3 @@ module.exports = new Pool({
         rejectUnauthorized: false
     }
 })
-
