@@ -1,9 +1,10 @@
+require('../passport')
 const express = require('express')
-const { getUsers, postUser } = require('../controllers/user')
+const passport = require('passport')
+const { getUsers } = require('../controllers/user')
 
 const router = express.Router()
 
-router.get('/', getUsers)
-router.post('/', postUser)
+router.get('/', passport.authenticate('jwt', { session: false }), getUsers)
 
 module.exports = router

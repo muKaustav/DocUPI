@@ -10,12 +10,21 @@ let getPrescriptions = async (req, res) => {
                 res.status(500).send(err)
             } else {
                 console.log(prescriptions)
-                res.status(200).send(prescriptions)
+
+                return res.status(200).send({
+                    success: true,
+                    result: prescriptions
+                })
             }
         })
     } catch (err) {
         console.log(err)
-        res.status(500).send(err)
+
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: err
+        })
     }
 }
 
@@ -41,7 +50,10 @@ let postPrescription = async (req, res) => {
                 }
             }, { new: true })
 
-            res.status(200).send(newPrescription)
+            return res.status(200).send({
+                success: true,
+                result: newPrescription
+            })
         } else {
             let newPrescription = await PrescriptionSchema.create({
                 userId,
@@ -54,11 +66,19 @@ let postPrescription = async (req, res) => {
                 }]
             })
 
-            res.status(200).send(newPrescription)
+            return res.status(200).send({
+                success: true,
+                result: newPrescription
+            })
         }
     } catch (err) {
         console.log(err)
-        res.status(500).send(err)
+
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: err
+        })
     }
 }
 
