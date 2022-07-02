@@ -1,8 +1,10 @@
 require('dotenv').config()
 require('./mongoDB/mongodb')
+const path = require('path')
 const cors = require('cors')
 const express = require('express')
 const passport = require('passport')
+const favicon = require('serve-favicon')
 const userRoute = require('./routes/user')
 const authRoute = require('./routes/auth')
 const prescriptionRoute = require('./routes/prescription')
@@ -12,6 +14,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(favicon(path.join(__dirname, './assets', 'favicon.png')))
 app.use(passport.initialize())
 
 app.get('/', (req, res) => {
